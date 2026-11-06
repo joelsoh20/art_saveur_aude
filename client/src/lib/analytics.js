@@ -1,4 +1,5 @@
 import { getConsent } from './consent.js';
+import { apiUrl } from '../api.js';
 
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`);
 const stored = (store, key) => { try { let v = store.getItem(key); if (!v) { v = uid(); store.setItem(key, v); } return v; } catch { return uid(); } };
@@ -12,5 +13,5 @@ export function track(type, label = '') {
     visitorId: stored(localStorage, 'aes_vid'), sessionId: stored(sessionStorage, 'aes_sid'),
     type, path: location.pathname, label, referrer: type === 'pageview' ? referrer() : '', device: device(),
   };
-  fetch('/api/analytics/collect', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => {});
+  fetch(apiUrl('/api/analytics/collect'), { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => {});
 }

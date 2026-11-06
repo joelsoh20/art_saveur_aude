@@ -10,6 +10,13 @@ export const DATABASE_URL = process.env.DATABASE_URL || 'postgres://postgres:pos
 export const PGSSL = process.env.PGSSL === '1';
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '2005';
 
+// Origines autorisées (séparées par des virgules), en plus de la même origine.
+// Par défaut : le serveur de dev Vite.
+export const CORS_ORIGINS = (process.env.CORS_ORIGINS || 'http://localhost:5173,http://127.0.0.1:5173')
+  .split(',')
+  .map((o) => o.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
 export const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 export const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
 export const DIST = path.join(ROOT, 'client', 'dist');

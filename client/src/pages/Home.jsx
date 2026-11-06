@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api.js';
+import { api, assetUrl } from '../api.js';
 import { Navbar, Footer, TikTokLink } from '../components/Layout.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { track } from '../lib/analytics.js';
@@ -16,7 +16,7 @@ function CakeCard({ cake, whatsapp }) {
     <article className="group flex h-full shrink-0 snap-start basis-[calc((100%-1rem)/2)] flex-col rounded-xl border border-white/60 bg-white/70 p-2 shadow-md shadow-blush-300/30 backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:shadow-xl sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-3rem)/4)]">
       <div className="aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-blush-100 to-blush-300">
         {cake.image_url
-          ? <img src={cake.image_url} alt={cake.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+          ? <img src={assetUrl(cake.image_url)} alt={cake.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
           : <div className="flex h-full items-center justify-center text-5xl transition duration-500 group-hover:scale-125 group-hover:rotate-6">{cake.emoji}</div>}
       </div>
       <div className="flex flex-1 flex-col px-1 pb-0.5 pt-2">

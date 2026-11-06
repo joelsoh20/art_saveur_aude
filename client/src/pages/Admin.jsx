@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api.js';
+import { api, apiUrl, assetUrl } from '../api.js';
 import StatsTab from './StatsTab.jsx';
 
 const TOKEN = 'aes_admin';
@@ -24,7 +24,7 @@ function Login({ onToken }) {
 
 function QR({ token, version }) {
   const [svg, setSvg] = useState('');
-  useEffect(() => { fetch('/api/admin/qr', { headers: { 'x-admin-token': token } }).then(r => r.text()).then(setSvg); }, [token, version]);
+  useEffect(() => { fetch(apiUrl('/api/admin/qr'), { headers: { 'x-admin-token': token } }).then(r => r.text()).then(setSvg); }, [token, version]);
   const download = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); a.download = 'qr-art-et-saveur.svg'; a.click(); };
   return (<><div className="mx-auto h-52 w-52 rounded-2xl border-4 border-blush-200 bg-white p-1" dangerouslySetInnerHTML={{ __html: svg }} /><button className="btn btn-sm btn-ghost mt-3" onClick={download}>Télécharger le QR</button></>);
 }
@@ -127,7 +127,7 @@ function CakeForm({ cake, token, onDone, onCancel }) {
   const [f, setF] = useState(() => (!cake && readDraft(CAKE_DRAFT)) || { name: cake?.name || '', description: cake?.description || '', price: cake?.price || '', emoji: cake?.emoji || '🍰' });
   useEffect(() => { if (!cake) writeDraft(CAKE_DRAFT, f); }, [cake, f]);
   const [file, setFile] = useState(null), [rm, setRm] = useState(false), [err, setErr] = useState('');
-  const preview = file ? URL.createObjectURL(file) : (!rm && cake?.image_url);
+  const preview = file ? URL.createObjectURL(file) : (!rm && assetUrl(cake?.image_url));
   const submit = async e => {
     e.preventDefault(); const fd = new FormData(); Object.entries(f).forEach(([k, v]) => fd.append(k, v)); if (file) fd.append('image', file); if (rm) fd.append('removeImage', '1');
     try { await api(cake ? `/api/admin/cakes/${cake.id}` : '/api/admin/cakes', { method: cake ? 'PUT' : 'POST', token, form: fd }); clearDraft(CAKE_DRAFT); onDone(); } catch (x) { setErr(x.message); }
@@ -160,7 +160,7 @@ function CakesTab({ token }) {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cakes.map(c => (
           <div key={c.id} className="card flex gap-3 !p-4">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-blush-100 text-4xl">{c.image_url ? <img src={c.image_url} alt="" className="h-full w-full object-cover" /> : c.emoji}</div>
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-blush-100 text-4xl">{c.image_url ? <img src={assetUrl(c.image_url)} alt="" className="h-full w-full object-cover" /> : c.emoji}</div>
             <div className="min-w-0 flex-1"><b className="block truncate">{c.name}</b><span className="text-sm text-berry-500">{c.price}</span>
               <div className="mt-2 flex gap-3 text-sm"><button className="underline" onClick={() => setEdit(c)}>Modifier</button><button className="text-berry-600 underline" onClick={() => del(c)}>Supprimer</button></div></div>
           </div>))}

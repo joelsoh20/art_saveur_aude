@@ -1,0 +1,13 @@
+[build]
+  base = "client"
+  command = "npm install && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Routes React (SPA) : toute URL renvoie index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
