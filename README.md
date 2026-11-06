@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Art et saveur by Aude
 
 Stack : React + Vite + Tailwind (client/) · Express + PostgreSQL (server/, module `pg`, Node ≥ 22.13).
@@ -43,3 +44,6 @@ Ajouter une fonctionnalité : modèle (SQL) → contrôleur (logique HTTP) → r
 - Statistiques **maison** (aucun service tiers) : pages vues, clics (Commander, WhatsApp, TikTok, inscription au quiz), appareil, site d'origine. Pas d'IP stockée. Consultables dans l'admin → onglet « 📊 Statistiques ».
 - Durées de conservation appliquées automatiquement (`server/services/retentionService.js`) : statistiques 13 mois, anciennes parties de quiz 12 mois.
 - Pages `/mentions-legales` et `/confidentialite` : **compléter `client/src/lib/legalInfo.js`** (nom, SIRET, adresse, e-mail, hébergeur…). Les champs « À compléter » sont surlignés sur la page.
+=======
+# art_saveur_aude
+>>>>>>> 8540c8eeca5260e55aad5e0e72f41f11a75f7243
