@@ -1,0 +1,17 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-blush-50 text-cocoa-800 font-sans antialiased; background-image: url('./assets/Background.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat; }
+  input, textarea { @apply w-full rounded-xl border-2 border-blush-200 bg-white px-4 py-3 outline-none transition focus:border-blush-500 focus:ring-4 focus:ring-blush-200/60; }
+  label { @apply mb-1 mt-4 block text-sm font-semibold text-cocoa-700; }
+}
+@layer components {
+  .btn { @apply inline-block rounded-full bg-gradient-to-b from-blush-300 to-blush-500 px-9 py-3 text-sm font-semibold uppercase tracking-widest text-white shadow-lg shadow-blush-400/40 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:hover:translate-y-0; }
+  .btn-dark { @apply bg-none bg-cocoa-800 shadow-cocoa-800/20; }
+  .btn-ghost { @apply bg-none bg-transparent text-cocoa-800 shadow-none ring-2 ring-cocoa-800/30 hover:bg-white/60; }
+  .btn-sm { @apply px-5 py-2 text-xs; }
+  .card { @apply rounded-3xl bg-white p-6 shadow-xl shadow-blush-300/30; }
+}
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { *, .reveal { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; } }
